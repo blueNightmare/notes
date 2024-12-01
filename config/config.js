@@ -8,7 +8,7 @@ module.exports = {
   productionJsSourceMap: false,
 
   devServer: {
-    port: 8090,
+    port: 3000,
     host: 'localhost',
     contentBase: path.join(__dirname, '../public'),
     watchContentBase: true,

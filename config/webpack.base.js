@@ -93,7 +93,7 @@ module.exports = merge(webpackConfig, {
                   modules: false
                 }
               },
-              'postcss-loader',
+              // 'postcss-loader',
               {
                 loader: 'less-loader',
                 options: { javascriptEnabled: true }

@@ -1,6 +1,10 @@
 import { Schema } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
 import { EditorState, Transaction } from 'prosemirror-state'
+import { keymap } from 'prosemirror-keymap'
+import { history, undo, redo } from 'prosemirror-history'
+import { baseKeymap } from 'prosemirror-commands'
+
 import { EditorOptions } from './types'
 
 export class Editor {
@@ -63,6 +67,12 @@ export class Editor {
         schema: this.schema,
       }),
     })
+
+    const newState = this.state.reconfigure({
+      plugins: [keymap(baseKeymap), history(), keymap({ 'Mod-z': undo, 'Mod-y': redo })],
+    })
+
+    this.view.updateState(newState)
   }
 
   private dispatchTransaction(transaction: Transaction) {
