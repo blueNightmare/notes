@@ -9,15 +9,16 @@ export default class Bold extends PluginComponent {
 
   constructor(props: any) {
     super(props)
+    this.handleSetBold = this.handleSetBold.bind(this)
   }
 
-  private handleInsertBold() {
-    console.log('insert bold')
+  private handleSetBold() {
+    this.editor.commands.setBold()
   }
 
   render() {
     return (
-      <span className="button button-type-bold" onClick={this.handleInsertBold}>
+      <span className="button button-type-bold" onClick={this.handleSetBold}>
         <Icon type="bold" />
       </span>
     )

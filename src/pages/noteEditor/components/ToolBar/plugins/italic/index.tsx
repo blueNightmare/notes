@@ -9,15 +9,16 @@ export default class Italic extends PluginComponent {
 
   constructor(props: any) {
     super(props)
+    this.handleSetItalic = this.handleSetItalic.bind(this)
   }
 
-  private handleInsertItalic() {
-    console.log('insert italic')
+  private handleSetItalic() {
+    this.editor.commands.setItalic()
   }
 
   render() {
     return (
-      <span className="button button-type-italic" onClick={this.handleInsertItalic}>
+      <span className="button button-type-italic" onClick={this.handleSetItalic}>
         <Icon type="italic" />
       </span>
     )

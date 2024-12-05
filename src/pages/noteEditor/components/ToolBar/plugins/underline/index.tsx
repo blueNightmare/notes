@@ -9,15 +9,16 @@ export default class underline extends PluginComponent {
 
   constructor(props: any) {
     super(props)
+    this.handleSetUnderline = this.handleSetUnderline.bind(this)
   }
 
-  private handleInsertUnderline() {
-    console.log('insert underline')
+  private handleSetUnderline() {
+    this.editor.commands.setUnderline()
   }
 
   render() {
     return (
-      <span className="button button-type-underline" onClick={this.handleInsertUnderline}>
+      <span className="button button-type-underline" onClick={this.handleSetUnderline}>
         <Icon type="underline" />
       </span>
     )

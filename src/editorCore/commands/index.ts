@@ -41,6 +41,42 @@ export class Commands {
     dispatch(tr)
   }
 
+  public setBold() {
+    const { state, dispatch } = this.view
+    const { selection, tr, schema } = state
+    if (selection.empty) {
+      return
+    }
+    const { from, to } = selection
+    const mark = schema.mark(schema.marks.bold, null)
+    tr.addMark(from, to, mark)
+    dispatch(tr)
+  }
+
+  public setItalic() {
+    const { state, dispatch } = this.view
+    const { selection, tr, schema } = state
+    if (selection.empty) {
+      return
+    }
+    const { from, to } = selection
+    const mark = schema.mark(schema.marks.italic, null)
+    tr.addMark(from, to, mark)
+    dispatch(tr)
+  }
+
+  public setUnderline() {
+    const { state, dispatch } = this.view
+    const { selection, tr, schema } = state
+    if (selection.empty) {
+      return
+    }
+    const { from, to } = selection
+    const mark = schema.mark(schema.marks.underline, null)
+    tr.addMark(from, to, mark)
+    dispatch(tr)
+  }
+
   public static keyMap(): { [key: string]: Command } {
     return {
       Enter: Commands.handleEnter,
