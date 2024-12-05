@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Editor } from '@/editorCore'
-import HeadToolbar from './components/HeadToolbar'
-import OtherButton from './components/OtherButton'
+import ToolBar from './components/ToolBar'
 import './index.less'
 
 const NoteEditor = () => {
@@ -14,14 +13,14 @@ const NoteEditor = () => {
     }
   }, [editorContainerRef.current])
 
+  const getEditor = React.useCallback(() => {
+    return editorRef.current
+  }, [editorRef.current])
+
   return (
     <div className="note">
       <div className="note-toolbar-wrapper">
-        <div className="doc-header"></div>
-        <div className="toolbar">
-          <OtherButton />
-          <HeadToolbar />
-        </div>
+        <ToolBar getEditor={getEditor} />
       </div>
       <div className="note-editor-wrapper" ref={editorContainerRef}></div>
     </div>

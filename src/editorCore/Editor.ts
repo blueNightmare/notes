@@ -4,6 +4,8 @@ import { EditorState, Transaction } from 'prosemirror-state'
 import { keymap } from 'prosemirror-keymap'
 import { history, undo, redo } from 'prosemirror-history'
 import { baseKeymap } from 'prosemirror-commands'
+import { schema } from './schema'
+import { Commands } from './commands'
 
 import { EditorOptions } from './types'
 
@@ -11,6 +13,8 @@ export class Editor {
   public schema!: Schema
 
   public view!: EditorView
+
+  public commands!: Commands
 
   public options: EditorOptions = {
     element: document.createElement('div'),
@@ -21,6 +25,7 @@ export class Editor {
     this.setOptions(options)
     this.createSchema()
     this.createView()
+    this.createCommands()
   }
 
   public setOptions(options: Partial<EditorOptions> = {}): void {
@@ -35,28 +40,7 @@ export class Editor {
   }
 
   private createSchema() {
-    this.schema = new Schema({
-      nodes: {
-        doc: {
-          content: 'block+',
-        },
-        paragraph: {
-          content: 'inline*',
-          group: 'block',
-          toDOM: () => {
-            return ['p', 0]
-          },
-          parseDOM: [
-            {
-              tag: 'p',
-            },
-          ],
-        },
-        text: {
-          group: 'inline',
-        },
-      },
-    })
+    this.schema = schema
   }
 
   private createView() {
@@ -69,14 +53,21 @@ export class Editor {
     })
 
     const newState = this.state.reconfigure({
-      plugins: [keymap(baseKeymap), history(), keymap({ 'Mod-z': undo, 'Mod-y': redo })],
+      plugins: [keymap(Commands.keyMap()), history(), keymap({ 'Mod-z': undo, 'Mod-y': redo })],
     })
 
     this.view.updateState(newState)
   }
 
+  private createCommands() {
+    this.commands = new Commands({
+      view: this.view,
+    })
+  }
+
   private dispatchTransaction(transaction: Transaction) {
     const state = this.state.apply(transaction)
     this.view.updateState(state)
+    this.view.focus()
   }
 }

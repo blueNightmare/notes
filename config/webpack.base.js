@@ -105,7 +105,7 @@ module.exports = merge(webpackConfig, {
             use: ['@svgr/webpack']
           },
           {
-            test: /\.(jpg|jpeg|bmp|png|webp|gif)$/,
+            test: /\.(jpg|jpeg|bmp|png|webp|gif|woff|ttf)$/,
             loader: 'url-loader',
             options: {
               limit: 8 * 1024,
